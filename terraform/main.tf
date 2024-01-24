@@ -1,22 +1,24 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "5.13.0"
     }
   }
 }
 
 provider "google" {
-  credentials = "./keys/trans-campus/trans-campus-410115-505735bd9928.json"
-  project = "trans-campus-410115"
-  region = "europe-west2"
+  credentials = file(var.credentials)
+  project     = var.project
+  region      = var.region
 }
 
+
 resource "google_storage_bucket" "demo-bucket" {
-  name          = "trans-campus-bucket"
-  location      = "EU"
+  name          = var.gcs_bucket_name
+  location      = var.location
   force_destroy = true
+
 
   lifecycle_rule {
     condition {
@@ -26,4 +28,11 @@ resource "google_storage_bucket" "demo-bucket" {
       type = "AbortIncompleteMultipartUpload"
     }
   }
+}
+
+
+
+resource "google_bigquery_dataset" "demo_dataset" {
+  dataset_id = var.bq_dataset_name
+  location   = var.location
 }
