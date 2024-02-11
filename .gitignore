@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 data_pgadmin/
 terraform/keys/
+keys/*.json
 
 # Local .terraform directories
 **/.terraform/*
