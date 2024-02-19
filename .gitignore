@@ -40,3 +40,6 @@ terraform.rc
 
 # Ignore any json files
 *.json
+
+# Ignore big files of taxi rides
+data/download/

@@ -90,7 +90,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-updated_at: '2024-02-06 11:39:30'
+updated_at: '2024-02-06T11:39:30+00:00'
 uuid: arcane_artificer
 variables_dir: /home/src/mage_data/magic-zoomcamp
 widgets: []
