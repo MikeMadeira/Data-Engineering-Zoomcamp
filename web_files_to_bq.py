@@ -8,7 +8,7 @@ from io import BytesIO
 base_url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_{}.csv.gz"
 
 # Define date range
-date = datetime(2019, 5, 1)
+date = datetime(2019, 1, 1)
 end_date = datetime(2020, 12, 31)
 
 # Create an empty DataFrame to store concatenated data
@@ -16,15 +16,18 @@ concatenated_df = pd.DataFrame()
 
 # Loop through the months using a for loop
 for year in [2019,2020]:
-    for month in range(1, 13):
-        formatted_month = f'{year}-{month}'
+    for month in range(10, 13):
+        if month < 10:
+            formatted_month = f'{year}-0{month}'
+        else:
+            formatted_month = f'{year}-{month}'
         url = base_url.format(formatted_month)
         intermediary_filename = 'data/download/yellow/yellow_tripdata_{}.csv'
         intermediary_filename = intermediary_filename.format(formatted_month)
 
         # Download the file
         response = requests.get(url)
-        print(url)
+        print(url,end='\n')
         df = pd.read_csv(BytesIO(response.content), compression='gzip', dtype={'RatecodeID': str}, na_values='')
         # Save intermediary file
         df.to_csv(intermediary_filename, index=False)
@@ -71,6 +74,7 @@ dataset = bigquery.Dataset(dataset_ref)
 try:
     client.create_dataset(dataset)
 except Exception as e:
+    print('Dataset already exists')
     pass  # Dataset already exists
 
 # Load the data into BigQuery table
