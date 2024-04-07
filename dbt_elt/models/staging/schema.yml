@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dbt-elt
+    
+    schema: dbt_mikemadeira
+
+    tables:
+      - name: green_tripdata_external
+      - name: yellow_tripdata_external
+         # freshness:
+           # error_after: {count: 6, period: hour}
